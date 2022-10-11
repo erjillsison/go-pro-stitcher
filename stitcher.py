@@ -18,15 +18,16 @@ for j in files:
     if prefix != "GH":
         continue
 
-    print(j[0:2], end=" ")
-    print("chapter: ", j[2:4], end=" ")
+    chapter = j[2:4]
+    print("chapter: ", chapter)
+
     video_num = j[4:8]
     print("video number, ", video_num)
 
     if video_num not in fs:
         fs[video_num] = []
 
-    fs[video_num].append(File(j[3:4], j))
+    fs[video_num].append(File(chapter, j))
 
 
 def key(f: File):
