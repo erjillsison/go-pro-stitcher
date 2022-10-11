@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 files = os.listdir(".")
 
@@ -34,7 +35,9 @@ def key(f: File):
 
 output_count = 0
 fmpeg_intermediate = "ffmpeg -i %s -c copy %s.ts"
-ffmpeg_concat = "ffmpeg -i \"concat:%s\" -c copy output%s.MP4"
+output_prefix = "%s" % datetime.now().date()
+output_name = output_prefix + "-%s.MP4"
+ffmpeg_concat = "ffmpeg -i \"concat:%s\" -c copy %s"
 
 try:
     for j in fs:
@@ -43,7 +46,7 @@ try:
             continue
 
         if len(fs[j]) == 1:
-            os.rename(fs[j][0].filename, "output%s.MP4" % j)
+            os.rename(fs[j][0].filename, output_name % j)
             continue
 
         fs[j].sort(key=key)
@@ -58,8 +61,8 @@ try:
         for i in range(intermediate_count):
             i_files.append("%s.ts" % i)
 
-        print(ffmpeg_concat % ("|".join(i_files), j))
-        os.system(ffmpeg_concat % ("|".join(i_files), j))
+        print(ffmpeg_concat % ("|".join(i_files), output_name % j))
+        os.system(ffmpeg_concat % ("|".join(i_files), output_name % j))
 
         print(i_files)
 
