@@ -35,13 +35,16 @@ def key(f: File):
 
 output_count = 0
 fmpeg_intermediate = "ffmpeg -i %s -c copy %s.ts"
-ffmpeg_concat = "ffmpeg -i \"concat:%s\" -c copy output%s.mp4"
+ffmpeg_concat = "ffmpeg -i \"concat:%s\" -c copy output%s.MP4"
 
 try:
     for j in fs:
-        # TODO if only one file, just rename so it can be clearly seen?
+        if len(fs[j]) == 0:
+            # not possible
+            continue
 
-        if len(fs[j]) <= 1:
+        if len(fs[j]) == 1:
+            os.rename(fs[j][0].filename, "output%s.MP4" % j)
             continue
 
         fs[j].sort(key=key)
