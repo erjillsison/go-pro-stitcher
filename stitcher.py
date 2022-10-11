@@ -18,9 +18,8 @@ for j in files:
         continue
 
     print(j[0:2], end=" ")
-
-    print("chapter: ", j[3:4], end=" ")
-    video_num = j[5:8]
+    print("chapter: ", j[2:4], end=" ")
+    video_num = j[4:8]
     print("video number, ", video_num)
 
     if video_num not in fs:
